@@ -1,0 +1,62 @@
+
+* sudo touch /etc/apt/sources.list.d/nginx.list
+
+* sudo nano /etc/apt/sources.list.d/nginx.list
+
+deb [arch=ams64] http://nginx.org/packages/manline/ubuntu/ bionic nginx
+
+deb-src http://nginx.org/packages/manline/ubuntu/ bionic nginx
+
+* wget http://nginx.org/keys/nginx_signing.key
+
+* sudo apt-key add nginx_signing.key
+* sudo apt-get update -y
+* sudo apt-get install nginx -y
+* sudo service nginx status
+* sudo service nginx start
+* sudo systemctl enable nginx
+* sudo reboot
+* cd /etc/nginx/
+* cat nginx.conf
+* cd ..
+* cd conf.d/
+* cat default.conf
+* sudo rm default.conf
+* sudo nginx -s reload
+* sudo touch default.conf
+    *** https://nginx.org/en/docs/http/ngx_http_core_module.html
+
+        *** sudo nano default.conf
+            *** server {
+                    listen 80;
+                    server_name localhost;
+
+                    root /usr/share/nginx/foo;
+            }
+    *** sudo mkdir /usr/share/nginx/foo
+    *** cd /usr/share/nginx/foo
+    *** sudo nano index.htm
+    *** sudo nginx -s reload
+
+*** C:\Windows\System32\drivers\etc\hosts
+    192.168.0.150 app.test
+    192.168.0.150 apache.app.test
+    192.168.0.150 nginx.app.test
+    192.168.0.150 whoami.app.test
+    *** cd /etc/nginx/conf.d/
+
+    *** server {
+        listen 80;
+        server_name app.test;
+
+        root /usr/share/nginx/foo;
+
+        error_page 404 = /404.html
+    }
+
+    *** sudo nginx -s reload
+    *** sudo mkdir /usr/share/nginx/apache
+    *** sudo cp defaul.conf apache.conf
+
+
+
