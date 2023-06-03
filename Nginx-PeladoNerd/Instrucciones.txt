@@ -1,0 +1,38 @@
+* apt-get install nginx -y
+
+* cd  /etc/nginx/
+* cd  /etc/nginx/sites-available
+* cp default juan.murillo.com
+* cp default david.murillo.com
+* nano david.murillo.com
+***
+    server {
+	listen 80;
+	listen [::]:80;
+
+	root /var/www/david;
+
+	server_name david.murillo.com;
+* nano juan.murillo.com
+***
+    server {
+	listen 80;
+	listen [::]:80;
+
+	root /var/www/juan;
+
+	server_name juan.murillo.com;
+
+* cd /etc/nginx/sites-enabled/
+
+* ln -s ../sites-available/juan.murillo.com .
+* ln -s ../sites-available/david.murillo.com .
+* nginx -s reload
+
+* cd /var/www/
+* mkdir david
+* mkdir juan
+* cd david
+* nano index.html
+* cd juan 
+* nano index.html

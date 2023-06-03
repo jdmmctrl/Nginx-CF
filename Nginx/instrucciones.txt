@@ -49,6 +49,11 @@ deb-src http://nginx.org/packages/manline/ubuntu/ bionic nginx
         listen 80;
         server_name app.test;
 
+        location admin {
+            auth_basic "Admin";
+            auth_basic_user_file "/etc/apache2/.htpasswd";
+                    }
+
         root /usr/share/nginx/foo;
 
         error_page 404 = /404.html
@@ -58,5 +63,7 @@ deb-src http://nginx.org/packages/manline/ubuntu/ bionic nginx
     *** sudo mkdir /usr/share/nginx/apache
     *** sudo cp defaul.conf apache.conf
 
+
+sudo apt-get install apache2-utils -y
 
 
