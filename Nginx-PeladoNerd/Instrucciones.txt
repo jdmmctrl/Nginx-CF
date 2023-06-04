@@ -36,3 +36,101 @@
 * nano index.html
 * cd juan 
 * nano index.html
+
+*********** Instalacion LEMP***************
+
+* apt-get update
+* apt-get install php-fpm -y
+* nano /etc/nginx/sites-enabled/juan.murillo.com
+
+*** 
+	# pass PHP scripts to FastCGI server
+	#
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+	
+		# With php-fpm (or other unix sockets):
+		fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+	#	# With php-cgi (or other tcp sockets):
+	#	fastcgi_pass 127.0.0.1:9000;
+	}
+
+	# deny access to .htaccess files, if Apache's document root
+	# concurs with nginx's one
+	#
+	location ~ /\.ht {
+		deny all;
+	}
+}
+
+* systemctl reload nginx
+* nano /var/wwww/juan/info.php
+***
+	<?php
+	phpinfo():
+	?>
+
+* tail -f /var/log/nginx/error.log
+* ls /var/run/php/php7.4-fpm.sock
+* apt-get install mysql-server php-mysql -y
+* wget https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.zip
+* apt-get install unzip
+* mv phpMyAdmin-5.2.1-all-languages phpmyadmin
+* 
+
+
+********* Certbot: https://certbot.eff.org/ ******
+
+# Preparar instalación certbot
+
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository universe
+sudo apt-get update
+
+# Instalación certbot
+
+sudo apt-get install certbot python3-certbot-nginx
+
+# Correr certbot
+
+sudo certbot --nginx
+
+# Testear renovación 
+
+sudo certbot renew --dry-run
+
+## Wordpress
+
+# Instalar dependencias 
+
+sudo apt install php-fpm php-common php-mbstring php-xmlrpc php-soap php-gd php-xml php-intl php-mysql php-cli php-mcrypt php-ldap php-zip php-curl
+
+
+
+************** Crear DB ***********
+
+mysql -u root -p
+CREATE DATABASE wordpress;
+CREATE USER 'wordpressuser'@'localhost' IDENTIFIED BY 'new_password_here';
+GRANT ALL ON wordpress.* TO 'wordpressuser'@'localhost' IDENTIFIED BY 'user_password_here' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+EXIT;
+
+*************** Bajar e instalar wordpress ***********
+
+wget https://wordpress.org/latest.tar.gz
+tar -zxvf latest.tar.gz
+sudo mv wordpress/* /var/www/pablo
+sudo find /var/www/pablo -type d -exec chmod 0755 {} \;
+sudo find /var/www/pablo -type f -exec chmod 0644 {} \;
+
+# Configurar wordpress
+
+cd /var/www/pablo 
+sudo mv wp-config-sample.php wp-config.php
+sudo vim wp-config.php
+
+(Configurar DB_NAME, DB_USER, DB_PASSWORD, DB_HOST)
+
+Lets encrypt: https://letsencrypt.org/es/about/
