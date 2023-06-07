@@ -38,6 +38,7 @@
 * nano index.html
 
 *********** Instalacion LEMP***************
+https://www.scriptcase.net/docs/es_es/v9/manual/02-scriptcase-installation/06-linux_php/
 
 * apt-get update
 * apt-get install php-fpm -y
@@ -64,19 +65,21 @@
 }
 
 * systemctl reload nginx
-* nano /var/wwww/juan/info.php
+* nano /var/www/juan/info.php
 ***
-	<?php
-	phpinfo():
-	?>
+<?php
+phpinfo():
+?>
 
 * tail -f /var/log/nginx/error.log
 * ls /var/run/php/php7.4-fpm.sock
 * apt-get install mysql-server php-mysql -y
 * wget https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.zip
 * apt-get install unzip
+* unzip phpMyAdmin-5.2.1-all-languages
 * mv phpMyAdmin-5.2.1-all-languages phpmyadmin
-* 
+*  nginx -t
+
 
 
 ********* Certbot: https://certbot.eff.org/ ******
@@ -104,7 +107,7 @@ sudo certbot renew --dry-run
 
 # Instalar dependencias 
 
-sudo apt install php-fpm php-common php-mbstring php-xmlrpc php-soap php-gd php-xml php-intl php-mysql php-cli php-mcrypt php-ldap php-zip php-curl
+apt-get install php-fpm php-common php-mbstring php-xmlrpc php-soap php-gd php-xml php-intl php-mysql php-cli php-mcrypt php-ldap php-zip php-curl
 
 
 
