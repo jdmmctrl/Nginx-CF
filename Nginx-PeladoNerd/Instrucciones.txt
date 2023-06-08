@@ -5,6 +5,7 @@
 * cp default juan.murillo.com
 * cp default david.murillo.com
 * nano david.murillo.com
+* nginx -s reload
 ***
     server {
 	listen 80;
@@ -25,6 +26,7 @@
 
 * cd /etc/nginx/sites-enabled/
 
+
 * ln -s ../sites-available/juan.murillo.com .
 * ln -s ../sites-available/david.murillo.com .
 * nginx -s reload
@@ -35,7 +37,7 @@
 * cd david
 * nano index.html
 * cd juan 
-* nano index.html
+* nano index.html ## aqui 
 
 *********** Instalacion LEMP***************
 https://www.scriptcase.net/docs/es_es/v9/manual/02-scriptcase-installation/06-linux_php/
@@ -64,21 +66,28 @@ https://www.scriptcase.net/docs/es_es/v9/manual/02-scriptcase-installation/06-li
 	}
 }
 
+* nginx -t
 * systemctl reload nginx
 * nano /var/www/juan/info.php
 ***
 <?php
-phpinfo():
+phpinfo();
 ?>
 
 * tail -f /var/log/nginx/error.log
+* cd /var/run/php/
 * ls /var/run/php/php7.4-fpm.sock
+* cd /var/www/juan/
 * apt-get install mysql-server php-mysql -y
 * wget https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.zip
 * apt-get install unzip
 * unzip phpMyAdmin-5.2.1-all-languages
-* mv phpMyAdmin-5.2.1-all-languages phpmyadmin
+* mv phpMyAdmin-5.2.1-all-languages phpmiadmin
 *  nginx -t
+* mysqladmin --user=root password "ctrl"
+* mysql -u root -p
+* CREATE USER 'phpmyadmin'@'localhost' IDENTIFIED BY 'juan';
+* GRANT ALL PRIVILEGES ON *.* TO 'phpmyadmin'@'localhost' WITH GRANT OPTION;
 
 
 
@@ -107,7 +116,8 @@ sudo certbot renew --dry-run
 
 # Instalar dependencias 
 
-apt-get install php-fpm php-common php-mbstring php-xmlrpc php-soap php-gd php-xml php-intl php-mysql php-cli php-mcrypt php-ldap php-zip php-curl
+apt-get install php-fpm php-common php-mbstring php-xmlrpc php-soap php-gd php-xml php-intl php-mysql php-cli php-ldap php-zip php-curl
+php-mcrypt
 
 
 
