@@ -1,20 +1,13 @@
 * apt-get install nginx -y
-
 * cd  /etc/nginx/
 * cd  /etc/nginx/sites-available
 * cp default juan.murillo.com
-* cp default david.murillo.com
-* nano david.murillo.com
-* nginx -s reload
-***
-    server {
-	listen 80;
-	listen [::]:80;
-
-	root /var/www/david;
-
-	server_name david.murillo.com;
 * nano juan.murillo.com
+* nginx -s reload
+* nginx -t
+* systemctl reload nginx
+
+
 ***
     server {
 	listen 80;
@@ -30,12 +23,11 @@
 * ln -s ../sites-available/juan.murillo.com .
 * ln -s ../sites-available/david.murillo.com .
 * nginx -s reload
+* nginx -t
+* systemctl reload nginx
 
 * cd /var/www/
-* mkdir david
 * mkdir juan
-* cd david
-* nano index.html
 * cd juan 
 * nano index.html 
 
@@ -65,14 +57,15 @@ https://www.scriptcase.net/docs/es_es/v9/manual/02-scriptcase-installation/06-li
 		deny all;
 	}
 }
-
-* nginx -t
-* systemctl reload nginx
 * nano /var/www/juan/info.php
 ***
 <?php
 phpinfo();
 ?>
+
+* nginx -s reload
+* nginx -t
+* systemctl reload nginx
 
 * tail -f /var/log/nginx/error.log
 * cd /var/run/php/
@@ -83,11 +76,16 @@ phpinfo();
 * apt-get install unzip
 * unzip phpMyAdmin-5.2.1-all-languages
 * mv phpMyAdmin-5.2.1-all-languages phpmyadmin
-*  nginx -t
+* nginx -s reload
+* nginx -t
+* systemctl reload nginx
 * mysqladmin --user=root password "ctrl"
 * mysql -u root -p
-* CREATE USER 'phpmyadmin'@'localhost' IDENTIFIED BY 'juan';
-* GRANT ALL PRIVILEGES ON *.* TO 'phpmyadmin'@'localhost' WITH GRANT OPTION;
+* CREATE USER 'ctrladmin'@'localhost' IDENTIFIED BY 'ctrl';
+* GRANT ALL PRIVILEGES ON *.* TO 'ctrladmin'@'localhost' WITH GRANT OPTION;
+* nginx -s reload
+* nginx -t
+* systemctl reload nginx
 
 ## aqui 
 
@@ -95,22 +93,20 @@ phpinfo();
 
 # Preparar instalación certbot
 
-sudo apt-get update
-sudo apt-get install software-properties-common
-sudo add-apt-repository universe
-sudo apt-get update
+* apt-get update
+* apt-get install software-properties-common
+* add-apt-repository universe
+* apt-get update
 
-# Instalación certbot
-
-sudo apt-get install certbot python3-certbot-nginx -y
+* apt-get install certbot python3-certbot-nginx -y
 
 # Correr certbot
 
-sudo certbot --nginx
+* certbot --nginx
 
 # Testear renovación 
 
-sudo certbot renew --dry-run
+* certbot renew --dry-run
 
 ## Wordpress
 
@@ -124,8 +120,8 @@ apt install php-fpm php-common php-mbstring php-xmlrpc php-soap php-gd php-xml p
 
 mysql -u root -p
 CREATE DATABASE wordpress;
-CREATE USER 'wordpressuserctrl'@'localhost' IDENTIFIED BY 'ctrl';
-GRANT ALL ON wordpress.* TO 'wordpressuserctrl'@'localhost' IDENTIFIED BY 'ctrl' WITH GRANT OPTION;
+CREATE USER 'ctrladmin1'@'localhost' IDENTIFIED BY 'ctrl';
+GRANT ALL ON wordpress.* TO 'ctrladmin'@'localhost' IDENTIFIED BY 'ctrl' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 EXIT;
 
@@ -133,16 +129,16 @@ EXIT;
 
 wget https://wordpress.org/latest.tar.gz
 tar -zxvf latest.tar.gz
-sudo mv wordpress/* /var/www/juan
+* mv wordpress/* /var/www/juan
 chmod -R www-data:www-data /var/www/juan/
-sudo find /var/www/juan -type d -exec chmod 0755 {} \;
-sudo find /var/www/juan -type f -exec chmod 0644 {} \;
+* find /var/www/juan -type d -exec chmod 0755 {} \;
+* find /var/www/juan -type f -exec chmod 0644 {} \;
 
 # Configurar wordpress
 
 cd /var/www/juan 
-sudo mv wp-config-sample.php wp-config.php
-sudo nano wp-config.php
+* mv wp-config-sample.php wp-config.php
+* nano wp-config.php
 
 
 // ** Database settings - You can get this info from your web host ** //
@@ -166,5 +162,8 @@ define( 'DB_COLLATE', '' );
 
 
 (Configurar DB_NAME, DB_USER, DB_PASSWORD, DB_HOST)
+* nginx -s reload
+* nginx -t
+* systemctl reload nginx
 
 Lets encrypt: https://letsencrypt.org/es/about/
