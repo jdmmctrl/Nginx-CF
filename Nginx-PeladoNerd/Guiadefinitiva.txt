@@ -121,14 +121,15 @@ apt install php-fpm php-common php-mbstring php-xmlrpc php-soap php-gd php-xml p
 mysql -u root -p
 CREATE DATABASE wordpress;
 CREATE USER 'ctrladmin1'@'localhost' IDENTIFIED BY 'ctrl';
-GRANT ALL ON wordpress.* TO 'ctrladmin'@'localhost' IDENTIFIED BY 'ctrl' WITH GRANT OPTION;
+GRANT ALL ON wordpress.* TO 'ctrladmin1'@'localhost' IDENTIFIED BY 'ctrl' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 EXIT;
 
 *************** Bajar e instalar wordpress ***********
 
-wget https://wordpress.org/latest.tar.gz
-tar -zxvf latest.tar.gz
+* cd /var/www/juan
+* wget https://wordpress.org/latest.tar.gz
+* tar -zxvf latest.tar.gz
 * mv wordpress/* /var/www/juan
 chmod -R www-data:www-data /var/www/juan/
 * find /var/www/juan -type d -exec chmod 0755 {} \;
